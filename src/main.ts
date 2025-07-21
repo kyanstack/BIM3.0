@@ -202,7 +202,7 @@ viewport.append(viewportGrid);
 
 // Content Grid Setup
 const viewportCardTemplate = () => BUI.html`
-  <div class="dashboard-card" style="padding: 0px;">
+  <div class="p-0 flex flex-col gap-4 shadow-lg rounded border border-gray-600 bg-gray-800 overflow-auto">
     ${viewport}
   </div>
 `;
@@ -286,3 +286,5 @@ app.layouts = {
 };
 
 app.layout = "应用";
+
+// Corner resize handles are now implemented in content.ts

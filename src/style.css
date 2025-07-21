@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* Grayscale Colors */
   --bim-ui_gray-0: hsl(220, 20%, 8%);
@@ -152,33 +156,7 @@ bim-context-menu bim-button:hover {
       var(--bim-ui_bg-contrast-20))
 }
 
-.dashboard-card {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: 0px 2px 8px var(--bim-ui_bg-contrast-10);
-  border-radius: 0.25rem;
-  outline: 1px solid var(--bim-ui_bg-contrast-40);
-  background-color: var(--bim-ui_bg-contrast-10);
-  overflow: auto;
-}
-
-bim-grid[floating] .dashboard-card {
-  background-color: var(--bim-ui_bg-base);
-  height: fit-content;
-}
-
-.dashboard-card>div:first-child {
-  overflow: hidden;
-}
-
-.card-label {
-  font-size: 0.9rem;
-  color: var(--bim-ui_accent-base);
-  font-weight: bold;
-  flex-shrink: 0;
-}
+/* Tailwind utility classes are now used instead of custom CSS */
 
 .viewer-message-label {
   justify-self: center;
@@ -188,8 +166,3 @@ bim-grid[floating] .dashboard-card {
   color: #424025;
 }
 
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}

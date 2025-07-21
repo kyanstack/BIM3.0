@@ -18,8 +18,8 @@ export const gridSidebarTemplate: BUI.StatefullComponent<GridSidebarState> = (
   };
 
   return BUI.html`
-  <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; border-right: 1px solid var(--bim-ui_bg-contrast-40); padding: 0.5rem;">
-    <div class="sidebar">
+  <div class="flex flex-col justify-between items-center border-r border-gray-600 p-2">
+    <div class="flex flex-col gap-2">
       ${Object.keys(grid.layouts).map((layout) => {
         const layoutIcon = layoutIcons[layout];
         const icon = !layoutIcon ? appIcons.LAYOUT : layoutIcon;
@@ -32,7 +32,7 @@ export const gridSidebarTemplate: BUI.StatefullComponent<GridSidebarState> = (
         `;
       })}
     </div>
-    <bim-button ?label-hidden=${compact} label="收起" style="width: fit-content; flex: 0; background-color: transparent; border-radius: ${compact ? "100%" : "0"}" icon=${compact ? appIcons.RIGHT : appIcons.LEFT} @click=${onToggleCompact}></bim-button>
+    <bim-button ?label-hidden=${compact} label="收起" class="w-fit flex-none bg-transparent rounded-${compact ? "full" : "none"}" icon=${compact ? appIcons.RIGHT : appIcons.LEFT} @click=${onToggleCompact}></bim-button>
   </div>
 `;
 };

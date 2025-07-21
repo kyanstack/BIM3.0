@@ -67,7 +67,7 @@ export const viewportGridTemplate: BUI.StatefullComponent<ViewportGridState> = (
     };
 
     return BUI.html`
-      <bim-toolbar style="align-self: start;" vertical>
+      <bim-toolbar class="self-start" vertical>
         <bim-toolbar-section>
           <bim-button @click=${onMeasurementsClick} ?active=${areMeasurementsEnabled} label="测量" tooltip-title="测量" icon=${appIcons.RULER}>
             <bim-context-menu>

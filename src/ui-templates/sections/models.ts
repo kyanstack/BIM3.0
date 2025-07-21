@@ -18,7 +18,6 @@ export const modelsPanelTemplate: BUI.StatefullComponent<ModelsPanelState> = (
   const [modelsList] = CUI.tables.modelsList({
     components,
     actions: { download: false },
-    emptyText: "暂无模型",
   });
 
   const onAddIfcModel = async ({ target }: { target: BUI.Button }) => {
@@ -74,10 +73,10 @@ export const modelsPanelTemplate: BUI.StatefullComponent<ModelsPanelState> = (
 
   return BUI.html`
     <bim-panel-section fixed icon=${appIcons.MODEL} label="模型">
-      <div style="display: flex; gap: 0.5rem;">
+      <div class="flex gap-2">
         <bim-text-input @input=${onSearch} vertical placeholder="搜索..." debounce="200"></bim-text-input>
-        <bim-button style="flex: 0;" icon=${appIcons.ADD}>
-          <bim-context-menu style="gap: 0.25rem;">
+        <bim-button class="flex-none" icon=${appIcons.ADD}>
+          <bim-context-menu class="gap-1">
             <bim-button label="IFC" @click=${onAddIfcModel}></bim-button>
             <bim-button label="分段" @click=${onAddFragmentsModel}></bim-button>
           </bim-context-menu> 

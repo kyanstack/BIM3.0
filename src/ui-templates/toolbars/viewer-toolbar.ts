@@ -275,15 +275,15 @@ export const viewerToolbarTemplate: BUI.StatefullComponent<
         <bim-button tooltip-title=${tooltips.ISOLATE.TITLE_ZH} tooltip-text=${tooltips.ISOLATE.TEXT_ZH} icon=${appIcons.ISOLATE} label="隔离" @click=${onIsolate}></bim-button>
         <bim-button icon=${appIcons.RULER} label="测量">
           <bim-context-menu>
-            <div style="display: flex; gap: 0.5rem; width: 15rem;">
+            <div class="flex gap-2 w-60">
               <bim-number-input value=6 label="最大距离" suffix="米" id=${numberInputId}></bim-number-input>
-              <bim-button style="flex: 0;" label="检查" @click=${onMeasure}></bim-button>
+              <bim-button class="flex-none" label="检查" @click=${onMeasure}></bim-button>
             </div>
           </bim-context-menu>
         </bim-button>
         <bim-button icon=${appIcons.COLORIZE} label="着色">
           <bim-context-menu>
-            <div style="display: flex; gap: 0.5rem; width: 10rem;">
+            <div class="flex gap-2 w-40">
               <bim-color-input id=${colorInputId}></bim-color-input>
               <bim-button label="应用" @click=${onApplyColor}></bim-button>
             </div>

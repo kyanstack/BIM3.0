@@ -7,6 +7,8 @@ import {
   SMALL_COLUMN_WIDTH,
 } from "../../globals";
 
+
+
 type Viewer = "viewer";
 
 type Models = {
@@ -21,6 +23,8 @@ type ElementData = {
 
 type Viewpoints = { name: "viewpoints"; state: TEMPLATES.ViewpointsPanelState };
 
+
+
 export type ContentGridElements = [Viewer, Models, ElementData, Viewpoints];
 
 export type ContentGridLayouts = ["查看器"];
@@ -30,6 +34,8 @@ export interface ContentGridState {
   id: string;
   viewportTemplate: BUI.StatelessComponent;
 }
+
+
 
 export const contentGridTemplate: BUI.StatefullComponent<ContentGridState> = (
   state,
@@ -65,10 +71,12 @@ export const contentGridTemplate: BUI.StatefullComponent<ContentGridState> = (
         `,
       },
     };
+
+
   };
 
   return BUI.html`
-    <bim-grid id=${state.id} style="padding: ${CONTENT_GRID_GAP}; gap: ${CONTENT_GRID_GAP}" ${BUI.ref(onCreated)}></bim-grid>
+    <bim-grid id=${state.id} class="p-4 gap-4" ${BUI.ref(onCreated)}></bim-grid>
   `;
 };
 

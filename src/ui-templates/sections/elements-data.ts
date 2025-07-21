@@ -49,10 +49,10 @@ export const elementsDataPanelTemplate: BUI.StatefullComponent<
 
   return BUI.html`
     <bim-panel-section fixed id=${sectionId} icon=${appIcons.TASK} label="选中数据">
-      <div style="display: flex; gap: 0.375rem;">
+      <div class="flex gap-1.5">
         <bim-text-input @input=${search} vertical placeholder="搜索..." debounce="200"></bim-text-input>
-        <bim-button style="flex: 0;" @click=${toggleExpanded} icon=${appIcons.EXPAND}></bim-button>
-        <bim-button style="flex: 0;" @click=${() => propsTable.downloadData("ElementData", "tsv")} icon=${appIcons.EXPORT} tooltip-title="导出数据" tooltip-text="导出显示的属性为TSV。"></bim-button>
+        <bim-button class="flex-none" @click=${toggleExpanded} icon=${appIcons.EXPAND}></bim-button>
+        <bim-button class="flex-none" @click=${() => propsTable.downloadData("ElementData", "tsv")} icon=${appIcons.EXPORT} tooltip-title="导出数据" tooltip-text="导出显示的属性为TSV。"></bim-button>
       </div>
       ${propsTable}
     </bim-panel-section> 

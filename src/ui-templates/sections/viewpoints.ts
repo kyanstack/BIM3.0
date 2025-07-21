@@ -14,7 +14,7 @@ export const viewpointsPanelTemplate: BUI.StatefullComponent<
 > = (state) => {
   const { components, world } = state;
 
-  const [viewpoints] = CUI.tables.viewpointsList({ components, emptyText: "暂无视点" });
+  const [viewpoints] = CUI.tables.viewpointsList({ components });
 
   const onCreate = async ({ target }: { target: BUI.Button }) => {
     target.loading = true;
@@ -47,7 +47,7 @@ export const viewpointsPanelTemplate: BUI.StatefullComponent<
 
   return BUI.html`
     <bim-panel-section fixed icon=${appIcons.CAMERA} label="视点">
-      <bim-button style="flex: 0;" label="添加" icon=${appIcons.ADD} @click=${onCreate}></bim-button> 
+      <bim-button class="flex-none" label="添加" icon=${appIcons.ADD} @click=${onCreate}></bim-button> 
       ${viewpoints}
     </bim-panel-section>
   `;

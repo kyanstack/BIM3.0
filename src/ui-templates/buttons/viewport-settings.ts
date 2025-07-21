@@ -28,7 +28,7 @@ export const viewportSettingsTemplate: BUI.StatefullComponent<
     };
 
     worldEnableCheckbox = BUI.html`
-      <bim-checkbox style="width: 15rem;" ?checked=${worldGrid.visible} label="网格" @change=${onToggleGrid}></bim-checkbox>
+      <bim-checkbox class="w-60" ?checked=${worldGrid.visible} label="网格" @change=${onToggleGrid}></bim-checkbox>
     `;
   }
 
@@ -39,8 +39,8 @@ export const viewportSettingsTemplate: BUI.StatefullComponent<
   };
 
   return BUI.html`
-    <bim-button style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: transparent;" icon=${appIcons.SETTINGS}>
-      <bim-context-menu style="width: 15rem; gap: 0.25rem">
+    <bim-button class="absolute top-2 right-2 bg-transparent" icon=${appIcons.SETTINGS}>
+      <bim-context-menu class="w-60 gap-1">
         ${worldEnableCheckbox}
         <bim-dropdown label="相机投影" @change=${onProjectionChange}>
           <bim-option label="透视" ?checked=${world.camera.projection.current === "Perspective"}></bim-option> 
