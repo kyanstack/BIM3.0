@@ -1,17 +1,168 @@
 <!doctype html>
-<html lang="en" class="bim-ui-dark">
+<html lang="zh-CN" class="bim-ui-dark">
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BIM App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#6528d7" />
+  <meta name="description" content="A modern Building Information Modeling viewer with 3D visualization capabilities" />
+  <meta name="keywords" content="BIM, 3D, viewer, IFC, building information modeling" />
+  <meta name="author" content="BIM 3.0 Team" />
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  
+  <!-- Icons for different platforms -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/icons/icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/icons/icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="60x60" href="/icons/icon-60x60.png" />
+  <link rel="apple-touch-icon" sizes="57x57" href="/icons/icon-57x57.png" />
+  
+  <!-- Apple specific meta tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BIM Viewer" />
+  
+  <!-- Microsoft specific meta tags -->
+  <meta name="msapplication-TileColor" content="#6528d7" />
+  <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
+  <meta name="msapplication-config" content="/browserconfig.xml" />
+  
+  <!-- Open Graph meta tags -->
+  <meta property="og:title" content="BIM 3.0 Viewer" />
+  <meta property="og:description" content="A modern Building Information Modeling viewer with 3D visualization capabilities" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://your-domain.com" />
+  <meta property="og:image" content="/icons/icon-512x512.png" />
+  
+  <!-- Twitter Card meta tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BIM 3.0 Viewer" />
+  <meta name="twitter:description" content="A modern Building Information Modeling viewer with 3D visualization capabilities" />
+  <meta name="twitter:image" content="/icons/icon-512x512.png" />
+  
+  <title>BIM 3.0 Viewer</title>
   <link rel="stylesheet" href="./src/style.css">
 </head>
 
 <body>
   <bim-grid id="app"></bim-grid>
+  
+  <!-- PWA Installation prompt -->
+  <div id="pwa-install-prompt" class="hidden fixed bottom-4 right-4 bg-gray-800 text-white p-4 rounded-lg shadow-lg border border-gray-600 max-w-sm">
+    <div class="flex items-center justify-between mb-2">
+      <h3 class="text-lg font-semibold">Install BIM Viewer</h3>
+      <button id="close-prompt" class="text-gray-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <p class="text-sm text-gray-300 mb-3">Install this app on your device for quick and easy access when you're on the go.</p>
+    <div class="flex gap-2">
+      <button id="install-pwa" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded text-sm font-medium">
+        Install
+      </button>
+      <button id="dismiss-prompt" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded text-sm">
+        Not now
+      </button>
+    </div>
+  </div>
+  
+  <!-- Offline indicator -->
+  <div id="offline-indicator" class="hidden fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg">
+    <div class="flex items-center gap-2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5z"></path>
+      </svg>
+      <span>You're offline</span>
+    </div>
+  </div>
+  
   <script type="module" src="/src/main.ts"></script>
+  
+  <!-- PWA Service Worker Registration -->
+  <script>
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+    
+    // PWA Install prompt
+    let deferredPrompt;
+    const installPrompt = document.getElementById('pwa-install-prompt');
+    const installBtn = document.getElementById('install-pwa');
+    const dismissBtn = document.getElementById('dismiss-prompt');
+    const closeBtn = document.getElementById('close-prompt');
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Show install prompt after 3 seconds
+      setTimeout(() => {
+        if (installPrompt && !localStorage.getItem('pwa-prompt-dismissed')) {
+          installPrompt.classList.remove('hidden');
+        }
+      }, 3000);
+    });
+    
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          console.log(`User response to the install prompt: ${outcome}`);
+          deferredPrompt = null;
+        }
+        installPrompt?.classList.add('hidden');
+      });
+    }
+    
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', () => {
+        installPrompt?.classList.add('hidden');
+        localStorage.setItem('pwa-prompt-dismissed', 'true');
+      });
+    }
+    
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        installPrompt?.classList.add('hidden');
+      });
+    }
+    
+    // Offline/Online detection
+    const offlineIndicator = document.getElementById('offline-indicator');
+    
+    window.addEventListener('online', () => {
+      offlineIndicator?.classList.add('hidden');
+    });
+    
+    window.addEventListener('offline', () => {
+      offlineIndicator?.classList.remove('hidden');
+    });
+    
+    // Check initial connection status
+    if (!navigator.onLine) {
+      offlineIndicator?.classList.remove('hidden');
+    }
+  </script>
 </body>
 
 </html>

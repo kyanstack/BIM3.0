@@ -5,6 +5,7 @@ import * as BUI from "@thatopen/ui";
 import * as TEMPLATES from "./ui-templates";
 import { appIcons, CONTENT_GRID_ID } from "./globals";
 import { viewportSettingsTemplate } from "./ui-templates/buttons/viewport-settings";
+import { pwaManager } from "./pwa";
 
 BUI.Manager.init();
 
