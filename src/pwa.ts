@@ -178,8 +178,8 @@ export class PWAManager {
       name: 'BIM 3.0 Viewer',
       shortName: 'BIM Viewer',
       description: 'A modern Building Information Modeling viewer with 3D visualization capabilities',
-      themeColor: '#6528d7',
-      backgroundColor: '#1a1d23'
+      themeColor: '#4179b5',
+      backgroundColor: '#202020'
     };
   }
 }

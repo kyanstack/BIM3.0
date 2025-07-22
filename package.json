@@ -5,7 +5,13 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-icons": "node scripts/generate-icons.js",
+    "validate-pwa": "node scripts/validate-pwa.js",
+    "setup-env": "node scripts/setup-env.js",
+    "test-supabase": "node scripts/test-supabase-mcp.js",
+    "test-supabase-connection": "node scripts/test-supabase-connection.js",
+    "simple-mcp-test": "node scripts/simple-mcp-test.js"
   },
   "devDependencies": {
     "@types/three": "0.175.0",

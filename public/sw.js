@@ -9,11 +9,9 @@ const STATIC_FILES = [
   '/src/main.ts',
   '/src/style.css',
   '/manifest.json',
-  'https://unpkg.com/web-ifc@0.0.69/',
-  'https://unpkg.com/three@0.175.0/',
-  'https://unpkg.com/@thatopen/components@3.1.0/',
-  'https://unpkg.com/@thatopen/ui@3.1.0/',
-  'https://unpkg.com/@thatopen/fragments@3.1.0/'
+  '/manifest.json',
+  '/sw.js',
+  '/browserconfig.xml'
 ];
 
 // Install event - cache static files
@@ -74,11 +72,11 @@ self.addEventListener('fetch', (event) => {
   } else if (url.pathname.startsWith('/src/') || url.pathname.startsWith('/node_modules/')) {
     // Source files - cache first, then network
     event.respondWith(cacheFirst(request, STATIC_CACHE));
-  } else if (url.pathname.startsWith('/icons/') || url.pathname.startsWith('/manifest.json')) {
+  } else if (url.pathname.startsWith('/icons/') || url.pathname.startsWith('/manifest.json') || url.pathname.startsWith('/sw.js') || url.pathname.startsWith('/browserconfig.xml')) {
     // PWA assets - cache first, then network
     event.respondWith(cacheFirst(request, STATIC_CACHE));
-  } else if (url.hostname.includes('unpkg.com') || url.hostname.includes('cdn')) {
-    // External CDN resources - network first, then cache
+  } else if (url.hostname.includes('unpkg.com') || url.hostname.includes('cdn') || url.hostname.includes('localhost')) {
+    // External CDN resources and localhost - network first, then cache
     event.respondWith(networkFirst(request, DYNAMIC_CACHE));
   } else {
     // Other requests - network first, then cache
@@ -102,6 +100,19 @@ async function cacheFirst(request, cacheName) {
     return networkResponse;
   } catch (error) {
     console.error('Cache first strategy failed:', error);
+    // Return a fallback response instead of error
+    if (request.url.includes('index.html') || request.url.endsWith('/')) {
+      return new Response(`
+        <!DOCTYPE html>
+        <html>
+          <head><title>BIM Viewer - Offline</title></head>
+          <body>
+            <h1>BIM Viewer</h1>
+            <p>You're currently offline. Please check your connection and try again.</p>
+          </body>
+        </html>
+      `, { headers: { 'Content-Type': 'text/html' } });
+    }
     return new Response('Network error', { status: 503 });
   }
 }
@@ -121,7 +132,20 @@ async function networkFirst(request, cacheName) {
     if (cachedResponse) {
       return cachedResponse;
     }
-    return new Response('Network error', { status: 503 });
+    // Return a more user-friendly error response
+    return new Response(`
+      <!DOCTYPE html>
+      <html>
+        <head><title>BIM Viewer - Connection Error</title></head>
+        <body>
+          <h1>Connection Error</h1>
+          <p>Unable to load the requested resource. Please check your connection and try again.</p>
+        </body>
+      </html>
+    `, { 
+      status: 503,
+      headers: { 'Content-Type': 'text/html' }
+    });
   }
 }
 

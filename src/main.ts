@@ -268,6 +268,8 @@ app.elements = {
       grid: contentGrid,
       compact: true,
       layoutIcons: contentGridIcons,
+      showSettings: false,
+      currentSettingsTab: "account",
     },
   },
   contentGrid,
@@ -287,5 +289,8 @@ app.layouts = {
 };
 
 app.layout = "应用";
+
+// Initialize PWA Manager
+pwaManager;
 
 // Corner resize handles are now implemented in content.ts

@@ -2,9 +2,7 @@ import * as OBC from "@thatopen/components";
 import * as BUI from "@thatopen/ui";
 import * as TEMPLATES from "..";
 import {
-  CONTENT_GRID_GAP,
   CONTENT_GRID_ID,
-  SMALL_COLUMN_WIDTH,
 } from "../../globals";
 
 
@@ -57,7 +55,7 @@ export const contentGridTemplate: BUI.StatefullComponent<ContentGridState> = (
       },
       viewpoints: {
         template: TEMPLATES.viewpointsPanelTemplate,
-        initialState: { components },
+        initialState: { components, world: components.get(OBC.Worlds).list.get("Main") },
       },
       viewer: state.viewportTemplate,
     };
@@ -67,7 +65,7 @@ export const contentGridTemplate: BUI.StatefullComponent<ContentGridState> = (
         template: `
           "models viewer elementData" 1fr
           "viewpoints viewer elementData" 1fr
-          /${SMALL_COLUMN_WIDTH} 1fr ${SMALL_COLUMN_WIDTH}
+          /18rem 1fr 16rem
         `,
       },
     };
